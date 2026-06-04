@@ -1,0 +1,28 @@
+[project]
+name = "ml-core"
+version = "0.1.0"
+description = "Shared ML logic — Drift Sentinel, Alchemist, Challenger"
+requires-python = ">=3.10"
+dependencies = [
+    "evidently>=0.7.21",
+    "numpy>=2.0.0",
+    "pandas>=2.3.3",
+    "pydantic>=2.13.4",
+]
+
+[project.optional-dependencies]
+alchemist = [
+    "openai>=1.0.0",
+]
+challenger = [
+    "httpx>=0.28.0",
+    "ray[train]>=2.40.0",
+    "torch>=2.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ml_core"]

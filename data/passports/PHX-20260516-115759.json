@@ -1,0 +1,22 @@
+{
+  "passport_id": "PHX-20260516-115759",
+  "timestamp": "2026-05-16T11:57:59.737832",
+  "model_vitals": {
+    "id": "phoenix-challenger-v1",
+    "f1_score": 0.98,
+    "improvement": 0.038
+  },
+  "healing_lineage": {
+    "drift_detected": [
+      "feature_c"
+    ],
+    "synthetic_diversity": 0.88,
+    "bias_check": "pass",
+    "estimated_cost": 0.12
+  },
+  "compliance": {
+    "status": "APPROVED",
+    "standard": "AI-ACT-2026-COMPLIANT",
+    "safety_guard": "STABILITY-VERIFIED"
+  }
+}

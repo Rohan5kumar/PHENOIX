@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phoenix-api
+  namespace: phoenix
+  labels:
+    app: phoenix-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: phoenix-api
+  template:
+    metadata:
+      labels:
+        app: phoenix-api
+        version: v1
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/phoenix/project-phoenix-api:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PHOENIX_ENV
+              value: production
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phoenix-api
+  namespace: phoenix
+spec:
+  selector:
+    app: phoenix-api
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phoenix-dashboard
+  namespace: phoenix
+  labels:
+    app: phoenix-dashboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: phoenix-dashboard
+  template:
+    metadata:
+      labels:
+        app: phoenix-dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: ghcr.io/phoenix/project-phoenix-dashboard:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_API_WS_URL
+              value: ws://phoenix-api.phoenix.svc.cluster.local/ws/health
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phoenix-dashboard
+  namespace: phoenix
+spec:
+  selector:
+    app: phoenix-dashboard
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP

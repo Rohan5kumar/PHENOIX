@@ -1,0 +1,24 @@
+{
+  "name": "project-phoenix",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Autonomous MLOps platform — Phoenix monorepo",
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "dev:dashboard": "pnpm --filter dashboard dev",
+    "dev:api": "uv run --directory apps/api uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "pnpm --filter dashboard build",
+    "lint": "pnpm -r lint"
+  },
+  "packageManager": "pnpm@10.2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "framer-motion": "^12.39.0",
+    "lucide-react": "^1.16.0",
+    "three": "^0.184.0"
+  }
+}

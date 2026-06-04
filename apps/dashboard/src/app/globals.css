@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════
+   PROJECT PHOENIX — MINIMALIST GLASSMORPHIC DARK
+   Accent: Neon Cyan (#06b6d4) & Royal Purple (#8b5cf6)
+   ═══════════════════════════════════════════════ */
+:root {
+  --background:   #02040a;       /* Deep obsidian black */
+  --surface:      #0b0f19;       /* Slate dark */
+  --surface-2:    #121824;       /* Slate medium */
+  --border:       rgba(255, 255, 255, 0.035);
+  --foreground:   #f8fafc;       /* slate-50 */
+  --muted:        #475569;       /* slate-600 */
+
+  /* Cyberpunk Accents */
+  --cyan:         #06b6d4;
+  --cyan-glow:    rgba(6, 182, 212, 0.2);
+  --purple:       #8b5cf6;
+  --purple-glow:  rgba(139, 92, 246, 0.15);
+
+  /* Status Colors */
+  --color-green:  #10b981;
+  --color-red:    #f43f5e;
+  --color-orange: #f97316;
+}
+
+@theme inline {
+  --color-background:       var(--background);
+  --color-foreground:       var(--foreground);
+  --color-surface:          var(--surface);
+  --color-phoenix-cyan:     var(--cyan);
+  --color-phoenix-green:    var(--color-green);
+  --color-phoenix-orange:   var(--color-orange);
+  --color-phoenix-red:      var(--color-red);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  
+  /* Sleek developer grid alignment background */
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.012) 1.2px, transparent 1.2px),
+    radial-gradient(ellipse at 15% 10%, rgba(6, 182, 212, 0.05), transparent 45%),
+    radial-gradient(ellipse at 85% 85%, rgba(139, 92, 246, 0.04), transparent 40%);
+  background-size: 22px 22px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+}
+
+/* ── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(255, 255, 255, 0.08); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(6, 182, 212, 0.3); }
+
+/* ── Custom CSS Tooltips (Zero JS dependencies) ── */
+.tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: rgba(8, 12, 20, 0.95);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: #94a3b8;
+  font-size: 9px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: normal;
+  z-index: 999;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 0 12px rgba(6, 182, 212, 0.05);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+}
+
+/* Tooltip Arrow */
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(8, 12, 20, 0.95) transparent transparent transparent;
+}
+
+.tooltip-trigger:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+  pointer-events: auto;
+}
+
+/* ── Minimalist Glassmorphic Panels ───────────── */
+@layer utilities {
+  .phoenix-panel {
+    background: rgba(8, 12, 21, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .phoenix-panel:hover {
+    border-color: rgba(6, 182, 212, 0.1);
+    box-shadow: 0 4px 24px rgba(6, 182, 212, 0.02);
+  }
+
+  .phoenix-panel-warning {
+    border-color: rgba(249, 115, 22, 0.2) !important;
+    box-shadow: 0 4px 24px rgba(249, 115, 22, 0.02) !important;
+  }
+
+  /* Micro highlights */
+  .glow-cyan   { box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
+  .glow-green  { box-shadow: 0 0 15px rgba(16, 185, 129, 0.15); }
+  .glow-red    { box-shadow: 0 0 15px rgba(244, 63, 94, 0.15); }
+
+  .text-neon-cyan {
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+  }
+}
+
+/* ── Sidebar layout ────────────────────────── */
+.phoenix-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 768px) {
+  .phoenix-layout { grid-template-columns: 1fr; }
+}
