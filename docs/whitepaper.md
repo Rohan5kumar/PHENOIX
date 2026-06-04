@@ -6,10 +6,10 @@
 ## Abstract
 Modern high-frequency machine learning pipelines suffer from acute operational challenges due to statistical covariate shift and drift. Typically, remediation requires manual debugging, retraining, and redeployment cycles, which prolongs the Mean Time to Resolution (MTTR) and increases downtime. 
 
-Project Phoenix introduces a production-ready, fully closed-loop **Sovereign Autonomous MLOps Framework** capable of:
+Project Phoenix introduces a production-ready, fully closed-loop **Autonomous MLOps Framework** focused on project-native capabilities:
 1. Continuous passive drift analysis (Sentinel Engine).
-2. Generative adversarial-cooperative high-fidelity synthetic data balancing (Alchemist Engine).
-3. Surgical weight manipulation and zero-downtime canary traffic rerouting (Weights Canary Surgeon).
+2. Policy-guided high-fidelity synthetic data balancing (Alchemist Engine).
+3. Zero-downtime challenger promotion with controlled canary traffic rerouting (Promotion Engine).
 
 ---
 
@@ -23,7 +23,7 @@ graph TD
     B -->|Covariate Drift Detected| C(Drift Manifest)
     C --> D(Alchemist Synthetic Synthesis)
     D -->|Balanced Synthetic Patch| E(Canary Training)
-    E --> F(Weights Canary Surgeon)
+    E --> F(Promotion Engine)
     F -->|Traffic Reroute / Hot Patch| A
     style B fill:#8b5cf6,stroke:#a78bfa,stroke-width:2px,color:#fff
     style D fill:#f97316,stroke:#fb923c,stroke-width:2px,color:#fff
@@ -53,11 +53,11 @@ Sentinel leverages the dual Kantorovich-Rubinstein formulation to compute EMD co
 
 ---
 
-## 3. Alchemist: Structured DeepSeek Synthesis
+## 3. Alchemist: Policy-Guided Synthesis
 
 When drift exceeds bounds, the **Alchemist Synthesis Engine** generates a remediation batch $X_{heal}$ designed to counter the active drift bias.
 
-Instead of generic interpolation, Alchemist runs a structured adversarial debate loop using the DeepSeek v4-Pro Sovereign LLM model. It defines:
+Instead of generic interpolation, Alchemist runs a structured policy-guided synthesis loop with configurable model connectors. It defines:
 - **Bias constraints**: Forces synthesis to focus on minority edge cases that are under-represented due to covariate drift.
 - **FinOps limits**: Computes active token pricing versus spot instance availability:
   $$\text{Budget Gate} = (\text{Input Tokens} \times P_{in} + \text{Output Tokens} \times P_{out}) < \text{Threshold}$$
@@ -69,9 +69,9 @@ The synthesized datasets are instantly subjected to:
 
 ---
 
-## 4. Weights Canary Surgeon: Traffic Routing
+## 4. Promotion Engine: Traffic Routing
 
-Once the challenger model $M_{challenger}$ is compiled, the **Canary Surgeon** executes a safe, zero-downtime transition using a modified Sigmoid-decay routing sequence:
+Once the challenger model $M_{challenger}$ is compiled, the **Promotion Engine** executes a safe, zero-downtime transition using a sigmoid-decay routing sequence:
 
 $$R_{challenger}(t) = \frac{1}{1 + e^{-k(t - t_{mid})}}$$
 
@@ -79,5 +79,5 @@ Where $R_{challenger}(t)$ represents the active traffic proportion routed to the
 
 ---
 
-## 5. Security & Sovereignty
+## 5. Security & Data Control
 All data synthesis, local fallbacks, and model alignments are sealed locally within container boundaries. Local SQLite fallback storage guarantees that during offline network failures or cloud connectivity losses, the waitlist and drift diagnostic signals remain fully preserved, guaranteeing zero lead loss.
